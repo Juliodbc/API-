@@ -1,5 +1,5 @@
 <?php
-namespace julioCorrea\usuario\usuario\Service;
+namespace julioCorrea\Tarefas\Service;
 class TarefaService{
   private $filePath = __DIR__ . '../../../data.json';
     private function readData()
