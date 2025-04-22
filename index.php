@@ -4,7 +4,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Slim\Exception\HttpNotFoundException;
-use Projetux\Service\TarefasService;
+use julioCorrea\usuario\src\TarefaService;
 use Projetux\math\Basic;
  
 require __DIR__ . '/vendor/autoload.php';
@@ -72,7 +72,7 @@ $app->get('/teste/raiz/{num1}', function (Request $request, Response $response, 
 });
  
 $app->get('/tarefas', function (Request $request, Response $response, array $args) {
-    $tarefas_service = new TarefasService();
+    $tarefas_service = new TarefaService();
     $tarefas = $tarefas_service->getAllTarefas();
     $response->getBody()->write(json_encode($tarefas));
     return $response->withHeader('Content-Type', 'application/json');
@@ -87,7 +87,7 @@ $app->post('/tarefas', function (Request $request, Response $response, array $ar
     return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
    }
    $tarefas = array_merge(['titulo' => '', 'concluido' => false], $parametros);
-   $tarefas_service = new TarefasService();
+   $tarefas_service = new TarefaService();
    $tarefas_service->createTarefa($tarefas);
  
    return $response->withStatus(201);
@@ -95,8 +95,8 @@ $app->post('/tarefas', function (Request $request, Response $response, array $ar
  
 $app->delete('/tarefas/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
-    $tarefas_service = new TarefasService();
-    $tarefas_service->deleteTarefas($id);
+    $tarefas_service = new TarefaService();
+    $tarefas_service->deleteTarefa($id);
     return $response->withStatus(204);
 });
  
@@ -109,7 +109,7 @@ $app->put('/tarefas/{id}', function (Request $request, Response $response, array
         ]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
     }
-    $tarefas_service = new TarefasService();
+    $tarefas_service = new TarefaService();
     $tarefas_service->updateTarefa($id,$dados_para_atualizar);
  
     return $response->withStatus(201);
